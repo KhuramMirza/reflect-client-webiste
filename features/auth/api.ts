@@ -1,5 +1,6 @@
 import { fetchApi } from "@/lib/fetcher";
 import { Login, Signup } from "@/features/auth/types";
+import { cookies } from "next/headers";
 
 export async function loginUser(credentials: Login) {
   return await fetchApi("/auth/login", {
@@ -21,4 +22,23 @@ export async function signupUser(details: Signup) {
     },
     credentials: "include",
   });
+}
+
+export async function checkUserStatus(token: string) {
+  if (!token) return null;
+
+  const response = await fetchApi("/users/getMe", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.data.doc || null;
+}
+
+export async function getAuthenticatedUser() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("jwt")?.value as string;
+  return await checkUserStatus(token);
 }
