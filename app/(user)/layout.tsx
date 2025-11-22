@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
+import React from "react";
 
 import { getAuthenticatedUser } from "@/features/auth/api";
 import { redirect } from "next/navigation";
 import Footer from "@/components/ui/Footer";
+import { UserProvider } from "@/features/auth/UserContext";
+import DashboardHeader from "@/components/ui/DashboardHrader";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -24,8 +26,11 @@ export default async function DashboardLayout({
   return (
     <html lang="en">
       <body>
-        {children}
-        {user.name}
+        <UserProvider user={user}>
+          {" "}
+          <DashboardHeader />
+          {children}
+        </UserProvider>
         <Footer />
       </body>
     </html>
