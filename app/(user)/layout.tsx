@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
+import { Toaster } from "sonner";
+import { UserProvider } from "@/features/auth/UserContext";
+import { getAuthenticatedUser } from "@/features/auth/api";
+
 import "../globals.css";
 import React from "react";
 
-import { getAuthenticatedUser } from "@/features/auth/api";
-import { redirect } from "next/navigation";
 import Footer from "@/components/ui/Footer";
-import { UserProvider } from "@/features/auth/UserContext";
 import DashboardHeader from "@/components/ui/DashboardHrader";
 
 export const metadata: Metadata = {
@@ -30,6 +32,7 @@ export default async function DashboardLayout({
           {" "}
           <DashboardHeader />
           {children}
+          <Toaster richColors position="top-center" duration={3000} />
         </UserProvider>
         <Footer />
       </body>
