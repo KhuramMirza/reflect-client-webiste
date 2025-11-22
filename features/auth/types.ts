@@ -9,3 +9,18 @@ export type Signup = {
   password: string;
   passwordConfirm: string;
 };
+
+export interface User {
+  _id: string;
+  name: string;
+  email: string;
+  profileImage: string;
+  role: "user" | "admin";
+  status: "active" | "inactive";
+  bio?: string;
+
+  isVerified?: boolean;
+
+  createdAt: string;
+  updatedAt: string;
+}
