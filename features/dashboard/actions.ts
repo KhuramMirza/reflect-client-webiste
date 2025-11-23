@@ -1,8 +1,9 @@
 "use server";
 
 import { getAuthToken } from "@/features/auth/token";
-import { generateQuiz } from "@/features/dashboard/api";
+import { generateQuiz, submitQuiz } from "@/features/dashboard/api";
 import { QuizGenerationResult } from "@/features/dashboard/types";
+import { revalidatePath } from "next/cache";
 
 export async function generateQuizAction(formData: FormData) {
   const token = getAuthToken();
@@ -28,5 +29,19 @@ export async function generateQuizAction(formData: FormData) {
     quizData,
   );
 
+  revalidatePath("/dashboard");
+
   return response;
+}
+
+export async function submitQuizAction(formData: FormData) {
+  const submittedAnswers: string[] = [];
+  const quizId = formData.get("quizId") as string;
+
+  for (const [key, value] of formData.entries()) {
+    if (key === "quizId") continue;
+    submittedAnswers.push(value.toString());
+  }
+
+  return await submitQuiz(quizId, submittedAnswers);
 }
