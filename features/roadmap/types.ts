@@ -24,6 +24,64 @@ export interface RoadmapCardProps {
   level: string;
   goal: string;
   checkPointsCount: number;
-  slug: string;
+  // slug: string;
   createdAt: string;
+}
+
+export interface RoadmapCheckpoint {
+  _id: string;
+  title: string;
+  description: string;
+}
+
+export interface RoadmapCreator {
+  _id: string;
+  name: string;
+  profileImage: string;
+}
+
+export interface RoadmapDetail {
+  _id: string;
+  title: string;
+  level: string;
+  goal: string;
+  checkPoints: RoadmapCheckpoint[];
+  createdBy: RoadmapCreator;
+  createdAt: string;
+  updatedAt: string;
+  slug: string;
+}
+
+export interface RoadmapApiResponse {
+  status: string;
+  data: {
+    roadmap: RoadmapDetail;
+  };
+}
+
+export interface Resource {
+  _id: string;
+  title: string;
+  description: string;
+  link: string;
+}
+
+export interface Topic {
+  _id: string;
+  title: string;
+  description: string; // We will treat this as Markdown
+  resources: Resource[];
+}
+
+export interface CheckpointDetail {
+  _id: string;
+  title: string;
+  description: string;
+  topics: Topic[];
+  roadmap: string; // roadmap ID
+}
+
+export interface CheckpointApiResponse {
+  status: string;
+  checkpoint: CheckpointDetail;
 }
