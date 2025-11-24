@@ -1,6 +1,7 @@
 import { getAuthToken } from "@/features/auth/token";
 import { fetchApi } from "@/lib/fetcher";
 import { RoadmapGenerationPayload } from "@/features/roadmap/types";
+import { CheckpointDetail } from "./types";
 
 export async function submitRoadmapAssessment(
   response: RoadmapGenerationPayload,
@@ -28,6 +29,16 @@ export async function generateRoadmap(promptId: string) {
 export async function fetchUserRoadmaps() {
   const token = await getAuthToken();
   return await fetchApi(`/roadmaps`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
+export async function fetchRoadmapDetails(id: string) {
+  const token = await getAuthToken();
+  return await fetchApi(`/roadmaps/${id}`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
