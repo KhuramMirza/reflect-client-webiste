@@ -45,3 +45,52 @@ export async function fetchRoadmapDetails(id: string) {
     },
   });
 }
+
+export async function generateTopics(checkpointId: string) {
+  const token = await getAuthToken();
+  return await fetchApi(`/topics/generate/${checkpointId}`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
+export async function fetchCheckpointDetails(
+  checkpointId: string,
+): Promise<CheckpointDetail | null> {
+  const token = await getAuthToken();
+
+  // 1. Initial Fetch
+  const { checkpoint } = await fetchApi(
+    `/roadmaps/checkpoints/${checkpointId}`,
+    {
+      method: "GET",
+      headers: { Authorization: `Bearer ${token}` },
+    },
+  );
+
+  const needsGeneration = !checkpoint.topics || checkpoint.topics.length === 0;
+
+  if (needsGeneration) {
+    console.log("Generating topics for checkpoint...");
+    await generateTopics(checkpointId);
+
+    // 2. Re-fetch with CACHE BUSTING
+    // We add ?refresh=timestamp to trick the browser into thinking it's a new request
+    const response = await fetchApi(
+      `/roadmaps/checkpoints/${checkpointId}?refresh=${Date.now()}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Cache-Control": "no-cache", // Extra safety
+        },
+      },
+    );
+
+    return response.checkpoint;
+  }
+
+  return checkpoint;
+}
