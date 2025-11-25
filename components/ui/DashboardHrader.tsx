@@ -51,9 +51,12 @@ export default function DashboardHeader() {
               )}
             </div>
             <div className="flex flex-col">
-              <p className="text-sm leading-none font-bold text-gray-900">
+              <Link
+                href="/profile"
+                className="text-sm leading-none font-bold text-gray-900"
+              >
                 {user?.name || "Loading..."}
-              </p>
+              </Link>
               <span className="text-[10px] font-medium tracking-wide text-gray-500 uppercase">
                 Member
               </span>
