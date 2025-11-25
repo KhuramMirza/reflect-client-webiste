@@ -50,7 +50,7 @@ export async function submitQuizAction(formData: FormData) {
   return await submitQuiz(quizId, submittedAnswers);
 }
 
-export async function generateQuizByFieAction(formData: FormData) {
+export async function generateQuizByFileAction(formData: FormData) {
   const file = formData.get("file");
 
   revalidatePath("/dashboard");
