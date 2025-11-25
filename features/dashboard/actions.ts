@@ -1,7 +1,11 @@
 "use server";
 
 import { getAuthToken } from "@/features/auth/token";
-import { generateQuiz, submitQuiz } from "@/features/dashboard/api";
+import {
+  generateQuiz,
+  generateQuizFromFile,
+  submitQuiz,
+} from "@/features/dashboard/api";
 import { QuizGenerationResult } from "@/features/dashboard/types";
 import { revalidatePath } from "next/cache";
 
@@ -44,4 +48,12 @@ export async function submitQuizAction(formData: FormData) {
   }
 
   return await submitQuiz(quizId, submittedAnswers);
+}
+
+export async function generateQuizByFieAction(formData: FormData) {
+  const file = formData.get("file");
+
+  revalidatePath("/dashboard");
+
+  return await generateQuizFromFile(file);
 }
