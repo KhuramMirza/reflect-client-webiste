@@ -12,6 +12,29 @@ export async function generateQuiz(token: string, body: GenerateQuiz) {
   });
 }
 
+export async function generateQuizFromFile(file) {
+  const token = await getAuthToken();
+
+  // 1. Create a FormData object
+  const formData = new FormData();
+
+  // 2. Append the file with the key 'file' (This matches what the backend expects)
+  formData.append("file", file);
+
+  return await fetchApi(
+    `/quiz/generate-from-file`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      // 3. Send the FormData, not the raw file
+      body: formData,
+    },
+    true, // isMultipart
+  );
+}
+
 export async function fetchRecentlyGeneratedQuizzes() {
   const token = await getAuthToken();
   return await fetchApi(`/quiz/get-recently-generated`, {
