@@ -79,10 +79,11 @@ export default function PrivacyPolicyPage() {
             <div className="space-y-16 leading-relaxed text-gray-600">
               <Section id="introduction" title="1. Introduction">
                 <p>
-                  At Reflect ("we," "our," or "us"), we are committed to
-                  protecting your privacy. This Privacy Policy explains how we
-                  collect, use, disclose, and safeguard your information when
-                  you visit our application and use our learning services.
+                  At Reflect (&#34;we,&#34; &#34;our,&#34; or &#34;us&#34;), we
+                  are committed to protecting your privacy. This Privacy Policy
+                  explains how we collect, use, disclose, and safeguard your
+                  information when you visit our application and use our
+                  learning services.
                 </p>
                 <p>
                   By accessing or using Reflect, you agree to the terms of this

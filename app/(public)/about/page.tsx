@@ -26,7 +26,7 @@ export default function AboutPage() {
             the world <span className="text-primary-600">learns to code.</span>
           </h1>
           <p className="mx-auto max-w-2xl text-xl leading-relaxed text-gray-600">
-            Reflect isn't just another LMS. It's an AI-powered companion
+            Reflect isn&#39;t just another LMS. It&#39;s an AI-powered companion
             designed to understand your unique learning curve and adapt in
             real-time.
           </p>
@@ -64,13 +64,14 @@ export default function AboutPage() {
           </div>
           <div className="w-full md:w-1/2">
             <h2 className="mb-6 text-3xl font-bold text-gray-900 md:text-4xl">
-              Education shouldn't be <br />
+              Education shouldn&#39;t be <br />
               <span className="text-primary-600">one-size-fits-all.</span>
             </h2>
             <div className="space-y-6 text-lg leading-relaxed text-gray-600">
               <p>
                 Traditional education forces everyone to learn at the same pace.
-                If you fall behind, you're lost. If you're ahead, you're bored.
+                If you fall behind, you&#39;re lost. If you&#39;re ahead,
+                you&#39;re bored.
               </p>
               <p>
                 We built Reflect to solve this. Our algorithms analyze your

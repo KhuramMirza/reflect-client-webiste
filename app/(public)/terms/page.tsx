@@ -85,14 +85,15 @@ export default function TermsPage() {
                 <p>
                   These Terms of Service constitute a legally binding agreement
                   made between you, whether personally or on behalf of an entity
-                  ("you") and Reflect Inc. ("we," "us," or "our"), concerning
-                  your access to and use of the Reflect website and application.
+                  (&#34;you&#34;) and Reflect Inc. (&#34;we,&#34; &#34;us,&#34;
+                  or &#34;our&#34;), concerning your access to and use of the
+                  Reflect website and application.
                 </p>
                 <p>
                   We reserve the right, in our sole discretion, to make changes
                   or modifications to these Terms of Service at any time and for
                   any reason. We will alert you about any changes by updating
-                  the "Last updated" date of these Terms of Service.
+                  the &#34;Last updated&#34; date of these Terms of Service.
                 </p>
               </Section>
 
@@ -124,8 +125,8 @@ export default function TermsPage() {
               <Section id="subscriptions" title="3. Payment and Subscriptions">
                 <p>
                   Some parts of the Service are billed on a subscription basis
-                  ("Subscription(s)"). You will be billed in advance on a
-                  recurring and periodic basis (such as monthly or annually).
+                  (&#34;Subscription(s)&#34;). You will be billed in advance on
+                  a recurring and periodic basis (such as monthly or annually).
                 </p>
                 <h4 className="mt-6 mb-2 font-bold text-gray-900">
                   Cancellation
@@ -142,9 +143,9 @@ export default function TermsPage() {
                 <p>
                   Our Platform allows you to post, link, store, share and
                   otherwise make available certain information, text, code, or
-                  other material ("Content"). You are responsible for the
-                  Content that you post to the Service, including its legality,
-                  reliability, and appropriateness.
+                  other material (&#34;Content&#34;). You are responsible for
+                  the Content that you post to the Service, including its
+                  legality, reliability, and appropriateness.
                 </p>
                 <p className="mt-4">
                   By posting Content to the Service (e.g., code solutions), you
