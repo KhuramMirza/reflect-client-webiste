@@ -3,7 +3,7 @@ import QuizForm from "@/features/dashboard/components/QuizForm";
 
 interface PageProps {
   params: {
-    quizSlug: string;
+    quizId: string;
   };
 }
 

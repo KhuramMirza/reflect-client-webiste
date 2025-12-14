@@ -35,6 +35,11 @@ export async function loginAction(formData: FormData) {
       message: "Email or password is incorrect. Please try again!",
     };
   }
+
+  return {
+    success: false,
+    message: "Something went wrong. Please try again later.",
+  };
 }
 
 export async function signupAction(formData: FormData) {
