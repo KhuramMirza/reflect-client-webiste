@@ -12,6 +12,20 @@ export async function generateQuiz(token: string, body: GenerateQuiz) {
   });
 }
 
+export async function generateQuizByTopic(
+  token: string,
+  body: GenerateQuiz,
+  topicId: string,
+) {
+  return await fetchApi(`/quiz/generate/${topicId}`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(body),
+  });
+}
+
 export async function generateQuizFromFile(file) {
   const token = await getAuthToken();
 
@@ -38,6 +52,16 @@ export async function generateQuizFromFile(file) {
 export async function fetchRecentlyGeneratedQuizzes() {
   const token = await getAuthToken();
   return await fetchApi(`/quiz/get-recently-generated`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
+export async function fetchRecentlyTopicGeneratedQuizzes(topicId: string) {
+  const token = await getAuthToken();
+  return await fetchApi(`/quiz/getTopicQuizzes/${topicId}`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
