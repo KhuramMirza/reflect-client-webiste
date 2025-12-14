@@ -3,6 +3,7 @@
 import { getAuthToken } from "@/features/auth/token";
 import {
   generateQuiz,
+  generateQuizByTopic,
   generateQuizFromFile,
   submitQuiz,
 } from "@/features/dashboard/api";
@@ -70,5 +71,50 @@ export async function generateQuizByFileAction(formData: FormData) {
       success: false,
       message: "There was an error while generating Quiz. Please try again!",
     };
+  }
+}
+
+export async function generateTopicQuizAction(
+  topicId: string,
+  topicTitle: string,
+  topicDescription: string,
+) {
+  const token = await getAuthToken();
+
+  console.log(topicId);
+  try {
+    // 1. Construct the payload
+    const quizData = {
+      topic: topicTitle,
+      description: topicDescription, // Pass the context so AI generates relevant questions
+      difficulty: "medium", // Default for roadmap modules
+      questionsCount: 5,
+    };
+
+    // 2. Call your existing API function
+    // Assuming generateQuiz returns the full backend response
+    const response = await generateQuizByTopic(token, quizData, topicId);
+    const newQuiz = response?.data;
+
+    // 3. Revalidate so it shows up in "Recent Quizzes"
+    revalidatePath("/dashboard");
+    revalidatePath(`/roadmap/[roadmapId]/[checkpointId]`); // Refresh the current page logic if needed
+
+    // 4. Return the ID for the client to redirect
+    // Adjust 'response.data._id' based on exactly how your backend returns the ID
+
+    // return { success: true, message: "Quiz generated successfully" };
+    return {
+      success: true,
+      quiz: {
+        id: newQuiz._id,
+        quizTopic: newQuiz.quizTopic || newQuiz.topic, // Handle potential naming differences
+        difficulty: newQuiz.difficulty,
+        questionsCount: newQuiz.questionsCount,
+      },
+    };
+  } catch (error) {
+    console.error("Quiz Generation Error:", error);
+    return { success: false, message: "Failed to generate quiz." };
   }
 }
