@@ -39,11 +39,13 @@ export default function PdfUploadModal({
   async function clientActionHandler(formData: FormData) {
     // 1. Call your imported server action here:
 
-    const response = await generateQuizByFileAction(formData);
-    if (response?.status === "success") {
+    const { success, message } = await generateQuizByFileAction(formData);
+    if (success) {
       setFileName(null);
-      toast.success("Quiz generated successfully");
+      toast.success(message);
       onClose();
+    } else {
+      toast.error(message);
     }
   }
 

@@ -3,14 +3,20 @@ import { Login, Signup } from "@/features/auth/types";
 import { cookies } from "next/headers";
 
 export async function loginUser(credentials: Login) {
-  return await fetchApi("/auth/login", {
-    method: "POST",
-    body: JSON.stringify(credentials),
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
-  });
+  try {
+    const response = await fetchApi("/auth/login", {
+      method: "POST",
+      body: JSON.stringify(credentials),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+
+    return { response, error: null };
+  } catch (error) {
+    return { response: null, error: error };
+  }
 }
 
 export async function signupUser(details: Signup) {

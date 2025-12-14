@@ -9,12 +9,20 @@ import { revalidatePath } from "next/cache";
 
 export async function generateRoadmapAction(payload: RoadmapGenerationPayload) {
   // Simulate API call or DB operation
-  console.log("Received Roadmap Request:", payload);
 
-  const response = await submitRoadmapAssessment(payload);
-  const promptId = response.data.responseId;
+  try {
+    const response = await submitRoadmapAssessment(payload);
+    const promptId = response.data.responseId;
 
-  revalidatePath("/dashboard");
+    revalidatePath("/dashboard");
 
-  return await generateRoadmap(promptId);
+    const response1 = await generateRoadmap(promptId);
+
+    return { success: true, message: `Roadmap generated successfully.` };
+  } catch (error) {
+    return {
+      success: false,
+      message: "There was an error while submitting the roadmap. Try again.",
+    };
+  }
 }

@@ -1,7 +1,23 @@
+"use client";
 import Link from "next/link";
 import { loginAction } from "@/features/auth/actions";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
+  const router = useRouter();
+  async function handleLoginAction(formData: FormData) {
+    const { success, message } = await loginAction(formData);
+    if (success) {
+      toast.success("Login successful");
+
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 2000);
+    } else {
+      toast.error(message);
+    }
+  }
   return (
     <div className="flex min-h-[calc(100vh-80px)] w-full bg-gray-50">
       {/* LEFT PANEL: Mission & Info (Redesigned) */}
@@ -85,7 +101,7 @@ export default function Page() {
             </p>
           </div>
 
-          <form action={loginAction} className="flex flex-col space-y-6">
+          <form action={handleLoginAction} className="flex flex-col space-y-6">
             <div className="flex flex-col gap-1.5">
               <label
                 htmlFor="email"

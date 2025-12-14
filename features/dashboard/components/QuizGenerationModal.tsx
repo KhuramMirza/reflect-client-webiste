@@ -50,9 +50,13 @@ export default function QuizGenerationModal({
 
   async function handleFormAction(formData: FormData) {
     startTransition(async () => {
-      const result: QuizGenerationResult = await generateQuizAction(formData);
-      if (result?.status === "success") {
-        toast.success("Quiz generated successfully");
+      const { success, message }: QuizGenerationResult =
+        await generateQuizAction(formData);
+      if (success) {
+        toast.success(message);
+        onClose();
+      } else {
+        toast.error(message);
         onClose();
       }
     });

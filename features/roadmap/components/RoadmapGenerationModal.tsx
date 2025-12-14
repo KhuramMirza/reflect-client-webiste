@@ -86,10 +86,14 @@ export default function RoadmapGenerationModal({
     }
 
     startTransition(async () => {
-      const result = await generateRoadmapAction({ responses: answers });
-      if (result?.status === "success") {
-        console.log(result.status);
-        toast.success("Roadmap generated successfully");
+      const { success, message } = await generateRoadmapAction({
+        responses: answers,
+      });
+      if (success) {
+        toast.success(message);
+        onClose();
+      } else {
+        toast.error(message);
         onClose();
       }
     });

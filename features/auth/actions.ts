@@ -15,8 +15,7 @@ export async function loginAction(formData: FormData) {
     password,
   };
 
-  const response = await loginUser(loginData);
-
+  const { response, error } = await loginUser(loginData);
   if (response?.token) {
     const cookieStore = await cookies();
     cookieStore.set("jwt", response.token, {
@@ -26,7 +25,15 @@ export async function loginAction(formData: FormData) {
       expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days
     });
 
-    redirect("/dashboard");
+    return { success: true, message: "Login successful" };
+
+    // redirect("/dashboard");
+  }
+  if (error) {
+    return {
+      success: false,
+      message: "Email or password is incorrect. Please try again!",
+    };
   }
 }
 

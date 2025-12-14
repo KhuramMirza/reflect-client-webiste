@@ -11,7 +11,7 @@ export type GenerateQuiz = {
 };
 
 export type QuizGenerationResult = {
-  status: string;
+  success: boolean;
   message: string;
 };
 
