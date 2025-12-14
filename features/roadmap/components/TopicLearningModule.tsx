@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
-import { BookOpen, Bot, Loader2, Sparkles } from "lucide-react";
+import { BookOpen, Bot, Sparkles, Loader2, ExternalLink } from "lucide-react"; // Added ExternalLink back
 import { toast } from "sonner";
 import { Topic } from "@/features/roadmap/types";
 import QuizCardClient from "@/features/dashboard/components/QuizCardClient";
@@ -18,28 +18,20 @@ type QuizSummary = {
 export default function TopicLearningModule({
   topic,
   initialQuiz,
-  initialAttempt, // <--- 1. Receive the attempt prop
+  initialAttempt,
 }: Readonly<{
   topic: Topic;
   initialQuiz?: QuizSummary | null;
-  initialAttempt?: any; // Use your Attempt Type here if you have it
+  initialAttempt?: any;
 }>) {
   const [showChat, setShowChat] = useState(false);
-
-  // Quiz States
   const [generatedQuiz, setGeneratedQuiz] = useState<QuizSummary | null>(
     initialQuiz || null,
   );
-  // 2. We don't necessarily need state for attempt, we can pass the prop directly,
-  // or store it if you plan to update it dynamically without page reload.
-
   const [showQuiz, setShowQuiz] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
 
-  // --- Handlers ---
-
   const handleGenerateQuiz = async () => {
-    // If quiz exists (from props OR just generated), toggle view
     if (generatedQuiz) {
       setShowQuiz(!showQuiz);
       return;
@@ -72,8 +64,8 @@ export default function TopicLearningModule({
       className="scroll-mt-20 rounded-2xl border border-gray-200 bg-white shadow-sm transition-all hover:shadow-md"
       id={topic._id}
     >
+      {/* 1. TOPIC HEADER & CONTENT */}
       <div className="p-6 md:p-8">
-        {/* ... Header (Same as before) ... */}
         <h2 className="mb-4 flex items-center gap-3 text-2xl font-bold text-gray-900">
           <BookOpen className="text-primary-500 h-6 w-6" />
           {topic.title}
@@ -83,6 +75,7 @@ export default function TopicLearningModule({
           <ReactMarkdown>{topic.description}</ReactMarkdown>
         </div>
 
+        {/* Action Buttons */}
         <div className="mt-6 flex flex-wrap gap-3">
           <button
             onClick={() => setShowChat(!showChat)}
@@ -114,7 +107,7 @@ export default function TopicLearningModule({
                     ? "Hide Quiz"
                     : initialAttempt
                       ? "View Result"
-                      : "View Quiz" // Optional: change text if attempted
+                      : "View Quiz"
                   : "Generate Quiz"}
               </>
             )}
@@ -122,8 +115,12 @@ export default function TopicLearningModule({
         </div>
       </div>
 
-      {showChat && <div className="p-6">Chat Interface...</div>}
+      {/* 2. AI CHAT SECTION (Hidden logic for brevity) */}
+      {showChat && (
+        <div className="p-6 text-sm text-gray-500">Chat Interface...</div>
+      )}
 
+      {/* 3. QUIZ SECTION */}
       {showQuiz && (
         <div className="animate-in slide-in-from-top-2 border-t border-gray-100 bg-amber-50/30 p-6">
           <div className="mb-4 flex items-center justify-between">
@@ -146,9 +143,41 @@ export default function TopicLearningModule({
                 quizTopic={generatedQuiz.quizTopic}
                 difficulty={generatedQuiz.difficulty}
                 questionsCount={generatedQuiz.questionsCount}
-                attempt={initialAttempt} // <--- 3. PASS THE ATTEMPT HERE
+                attempt={initialAttempt}
               />
             )}
+          </div>
+        </div>
+      )}
+
+      {/* 4. RESOURCES SECTION (Restored) */}
+      {topic.resources && topic.resources.length > 0 && (
+        <div className="rounded-b-2xl border-t border-gray-100 bg-gray-50 p-6">
+          <h4 className="mb-3 text-sm font-bold tracking-wider text-gray-500 uppercase">
+            Recommended Resources
+          </h4>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {topic.resources.map((res) => (
+              <a
+                key={res._id}
+                href={res.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-start gap-3 rounded-xl border border-gray-200 bg-white p-3 transition-all hover:border-indigo-300 hover:shadow-md"
+              >
+                <div className="bg-primary-50 text-primary-600 mt-0.5 flex h-8 w-8 flex-none items-center justify-center rounded-lg group-hover:bg-indigo-100">
+                  <ExternalLink className="h-4 w-4" />
+                </div>
+                <div>
+                  <div className="font-medium text-gray-900 group-hover:text-indigo-600">
+                    {res.title}
+                  </div>
+                  <div className="line-clamp-1 text-xs text-gray-500">
+                    {res.description}
+                  </div>
+                </div>
+              </a>
+            ))}
           </div>
         </div>
       )}
